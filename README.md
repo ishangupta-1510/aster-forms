@@ -128,7 +128,7 @@ IDs are stable lowercase identifiers (`a-z`, digits, underscores), maximum 64 ch
 | `file`         | Array of `{name, size, type}` descriptors  | File count, bytes per file, exact MIME types            |
 | `matrix`       | Object mapping row values to column values | Configured keys/values; required matrices need all rows |
 
-Blank inputs are omitted by the runner. Explicit empty strings/arrays/objects are invalid answer values in the schema. Numeric zero remains a valid answer where permitted. Text is not trimmed; whitespace counts toward length. Optional matrices may be partially answered; required ones must be complete. Each matrix row accepts one radio choice. Date range rules, dynamic matrix rows, rich text and calculated values are outside this release.
+Blank inputs are omitted by the runner. Explicit empty strings/arrays/objects are invalid answer values in the schema. Numeric zero remains a valid answer where permitted. Text is not trimmed; whitespace counts toward length, but required text must contain a non-whitespace character. Optional matrices may be partially answered; required ones must be complete. Each matrix row accepts one radio choice. Date range rules, dynamic matrix rows, rich text and calculated values are outside this release.
 
 ## Conditional logic
 
@@ -146,7 +146,7 @@ field.visibleWhen = {
 };
 ```
 
-The properties panel edits one condition at a time; the JSON definition/API supports compound rules. Option comparisons use stored values, not display labels. Numeric comparisons require numeric condition values. A missing or hidden controller makes its comparison false, including `ne`. A field's visibility also depends on its controller's visibility, so stale hidden answers cannot reveal another field. File and matrix fields cannot act as condition controllers in this version.
+The properties panel edits one condition at a time; the JSON definition/API supports compound rules. Option comparisons use stored values, not display labels. Numeric comparisons require numeric condition values. A missing, empty, or hidden controller makes its comparison false, including `ne`. A field's visibility also depends on its controller's visibility, so stale hidden answers cannot reveal another field. File and matrix fields cannot act as condition controllers in this version.
 
 When an answer hides a field, the runner clears that field's value and selected files immediately. Revealing it again shows a blank input. Deleting a field/page/section in the builder clears external visibility rules referencing removed fields; undo restores both the removed items and their rules. There is no arbitrary expression execution or `eval` in Aster's engine.
 

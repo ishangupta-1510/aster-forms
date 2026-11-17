@@ -2,7 +2,7 @@
 
 Validated on November 17, 2026 with Node.js 22.23.2 on Windows.
 
-- **13 headless tests passed.** Tests cover every field type; required, enum, number, date, file and matrix constraints; independent Ajv equivalence; compound/chained visibility; missing-controller semantics; anonymous exclusions; form/version/mode envelope constraints; atomic rejected edits; reorder/history; deletion of condition dependencies; prototype-key rejection; Unicode lengths; zero/empty handling.
+- **15 headless tests passed.** Tests cover every field type; required, enum, number, date, file and matrix constraints; independent Ajv equivalence; compound/chained visibility; missing-controller semantics; anonymous exclusions; form/version/mode envelope constraints; atomic rejected edits; reorder/history; deletion of condition dependencies; prototype-key rejection; Unicode lengths; zero/empty handling.
 - **Browser integration passed in Playwright Chromium.** Actual UI properties, adding fields, undo, keyboard reorder controls, native drag/drop within and between sections, page/section creation, conditional editor, JSON Schema download, runner input for all eight types, required validation, live hiding and clearing, actual in-memory File objects, multipart assembly, standard and anonymous submissions, submit callback failure/retry, duplicate-submit prevention, missing restored file detection, mobile overflow and destruction were exercised.
 - **Strict TypeScript consumer check passed.** The public definitions compile with a builder, runner and headless consumer.
 - **Server example passed.** Ajv 2020-12 plus ajv-formats compiled the exported submission schema and accepted the valid sample payload.

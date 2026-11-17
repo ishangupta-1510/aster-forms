@@ -315,7 +315,11 @@ export function visibility(
     if (!condition) return true;
     if (condition.all) return condition.all.every(test);
     if (condition.any) return condition.any.some(test);
-    if (!visible(condition.field) || !own(answers, condition.field))
+    if (
+      !visible(condition.field) ||
+      !own(answers, condition.field) ||
+      empty(answers[condition.field])
+    )
       return false;
     const value = answers[condition.field];
     return condition.op === "includes"
@@ -379,6 +383,7 @@ function fieldErrors(field, value) {
   if (field.type === "text") {
     if (typeof value !== "string") fail("Enter text.");
     else {
+      if (field.required && !value.trim()) fail("This answer is required.");
       const length = Array.from(value).length;
       if (length < Math.max(1, v.minLength ?? 0))
         fail(`Use at least ${Math.max(1, v.minLength ?? 0)} characters.`);

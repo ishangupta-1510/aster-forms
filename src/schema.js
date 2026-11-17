@@ -5,6 +5,7 @@ function fieldSchema(field) {
   switch (field.type) {
     case "text":
       schema = { type: "string", minLength: Math.max(1, v.minLength ?? 0) };
+      if (field.required) schema.allOf = [{ pattern: "\\S" }];
       if (v.maxLength != null) schema.maxLength = v.maxLength;
       if (v.pattern) schema.pattern = v.pattern;
       break;

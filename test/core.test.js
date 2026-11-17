@@ -326,3 +326,41 @@ test("optional empty values are omitted; required submission rejects missing ans
   );
   assert.throws(() => createSubmission(sampleForm, {}), /highlighted/);
 });
+
+test("required text rejects whitespace consistently in client and exported schema", () => {
+  const form = createForm();
+  form.pages[0].sections[0].fields = [
+    {
+      ...createField("text", "answer"),
+      required: true,
+      validation: { pattern: "^.*$" },
+    },
+  ];
+  const validate = compile(form);
+  for (const value of [" ", "\t", "\u00a0"]) {
+    assert.equal(validateAnswers(form, { answer: value }).valid, false);
+    assert.equal(validate({ answer: value }), false);
+  }
+  assert(validateAnswers(form, { answer: "  real answer  " }).valid);
+  assert(validate({ answer: "  real answer  " }));
+});
+test("empty controllers cannot reveal dependents and cleaning is idempotent", () => {
+  const form = createForm();
+  form.pages[0].sections[0].fields = [
+    createField("text", "controller"),
+    {
+      ...createField("text", "detail"),
+      required: true,
+      visibleWhen: { field: "controller", op: "ne", value: "yes" },
+    },
+  ];
+  for (const value of ["", null, undefined]) {
+    const answers = { controller: value, detail: "stale" };
+    assert.equal(visibility(form, answers).get("detail"), false);
+    const clean = cleanAnswers(form, answers);
+    assert.deepEqual(clean, {});
+    assert.deepEqual(cleanAnswers(form, clean), clean);
+    assert(validateAnswers(form, clean).valid);
+    assert(compile(form)(clean));
+  }
+});
