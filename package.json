@@ -1,0 +1,47 @@
+{
+  "name": "aster-forms",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Independent visual form builder, survey runner and JSON Schema exporter",
+  "license": "MIT",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    },
+    "./core": {
+      "types": "./src/core.d.ts",
+      "import": "./src/core.js"
+    },
+    "./style.css": "./src/style.css"
+  },
+  "files": [
+    "src",
+    "docs",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "demo": "node demo/server.js",
+    "test:browser": "node test/browser.mjs",
+    "check:types": "tsc --noEmit --strict --lib es2022,dom --module nodenext --moduleResolution nodenext test/types.ts",
+    "format": "prettier --write src test demo examples scripts docs README.md package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ishangupta-1510/aster-forms.git"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
